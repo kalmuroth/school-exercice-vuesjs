@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as fb from '../firebase'
 import router from '../router/index'
-
 Vue.use(Vuex)
 
 // realtime firebase
@@ -88,9 +87,10 @@ const store = new Vuex.Store({
                 likes: 0
             })
         },
-        async likePost(post) {
+        async likePost(post, likes) {
             const userId = fb.auth.currentUser.uid
-            const docId = `${userId}_${post.id}`
+            const docId = `${userId}_${likes.id}`
+            console.log("hey", post)
 
             // check if user has liked post
             const doc = await fb.likesCollection.doc(docId).get()
@@ -98,13 +98,13 @@ const store = new Vuex.Store({
 
             // create post
             await fb.likesCollection.doc(docId).set({
-                postId: post.id,
+                postId: likes.id,
                 userId: userId
             })
 
             // update post likes count
-            fb.postsCollection.doc(post.id).update({
-                likes: post.likesCount + 1
+            fb.postsCollection.doc(likes.id).update({
+                likes: likes.likesCount + 1
             })
         },
         async updateProfile({ dispatch }, user) {
