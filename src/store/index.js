@@ -52,7 +52,8 @@ const store = new Vuex.Store({
 
             // create user object in userCollections
             await fb.usersCollection.doc(user.uid).set({
-                name: form.name
+                name: form.name,
+                userName: "user" + form.name
             })
 
             // fetch user profile and set in state
@@ -97,16 +98,7 @@ const store = new Vuex.Store({
 
             // check if user has liked post
             const doc = await fb.likesCollection.doc(docId).get()
-            if (doc.exists) { 
-                fb.postsCollection.doc(likes.id).update({
-                    likes: likes.likesCount - 1
-                })
-                await fb.likesCollection.doc(docId).delete({
-                    postId: likes.id,
-                    userId: userId
-                })
-                return 
-            }
+            if (doc.exists) { return }
 
             // create post
             await fb.likesCollection.doc(docId).set({
