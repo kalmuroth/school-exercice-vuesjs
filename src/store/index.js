@@ -21,11 +21,15 @@ fb.postsCollection.orderBy('createdOn', 'desc').onSnapshot(snapshot => {
 const store = new Vuex.Store({
     state: {
         userProfile: {},
-        posts: []
+        posts: [],
+        updateUserProfile:{},
     },
     mutations: {
         setUserProfile(state, val) {
             state.userProfile = val
+        },
+        updateUserProfile(state, val) {
+            state.userProfile.name = val
         },
         setPerformingRequest(state, val) {
             state.performingRequest = val
@@ -90,7 +94,6 @@ const store = new Vuex.Store({
         async likePost(post, likes) {
             const userId = fb.auth.currentUser.uid
             const docId = `${userId}_${likes.id}`
-            console.log("hey", post)
 
             // check if user has liked post
             const doc = await fb.likesCollection.doc(docId).get()
@@ -107,7 +110,7 @@ const store = new Vuex.Store({
                 likes: likes.likesCount + 1
             })
         },
-        async updateProfile({ dispatch }, user) {
+        async updateProfile({ dispatch, commit }, user) {
             const userId = fb.auth.currentUser.uid
                 // update user object
 
@@ -119,6 +122,12 @@ const store = new Vuex.Store({
                 fb.postsCollection.doc(doc.id).update({
                     userName: user.name
                 })
+            })
+
+            // update username
+            commit('updateUserProfile', user.name)
+            fb.usersCollection.doc(userId).update({
+                name: user.name
             })
 
             // update all comments by user

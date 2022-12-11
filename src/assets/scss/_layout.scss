@@ -46,6 +46,11 @@ header {
     background: $white;
   }
 
+  .error {
+    color: $error;
+    margin: 0.5rem 0 -2rem;
+  }
+
   .col1,
   .col2 {
     height: 100vh;
@@ -109,59 +114,6 @@ header {
       p {
         margin-bottom: 2rem;
       }
-    }
-  }
-}
-
-// password reset
-.modal {
-  display: flex;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(#333, 0.5);
-
-  .modal-content {
-    position: relative;
-    margin: auto;
-    width: 100%;
-    max-width: 400px;
-    background: #fff;
-    padding: 40px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px 0 rgba(#333, 0.5);
-    z-index: 999;
-
-    .close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 5px;
-      cursor: pointer;
-      transition: 0.15s;
-
-      &:hover {
-        color: #000;
-      }
-    }
-
-    h3 {
-      margin: 0;
-    }
-
-    p {
-      margin: 15px 0;
-    }
-
-    .error {
-      color: rgb(238, 61, 30);
-      font-size: 12px;
-    }
-
-    .button {
-      width: 100%;
     }
   }
 }
@@ -400,6 +352,11 @@ header {
 
   .success {
     color: $success;
+    margin: 0.5rem 0 -2rem;
+  }
+
+  .error {
+    color: $error;
     margin: 0.5rem 0 -2rem;
   }
 

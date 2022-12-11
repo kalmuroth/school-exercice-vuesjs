@@ -24,6 +24,11 @@
               <div class="extras">
                 <a @click="toggleForm()">Crée un compte</a>
               </div>
+
+              <transition name="fade">
+                <p v-if="showErrorLogin" class="error">E-mail ou Mot de passe invalide</p>
+            </transition>
+
           </form>
 
           <form v-else @submit.prevent>
@@ -44,6 +49,9 @@
             <div class="extras">
               <a @click="toggleForm()">Revenir à la page d'avant</a>
             </div>
+            <transition name="fade">
+              <p v-if="showErrorRegister" class="error">Veuillez bien vérifier si votre adresse E-mail est valide et que votre mot de passe est supérieur ou égal à 6 caractères</p>
+            </transition>
           </form>
         </div>
       </section>
@@ -65,6 +73,9 @@ export default {
         password: ''
       },
       showLoginForm: true,
+      task:'',
+      showErrorRegister: false,
+      showErrorLogin: false
     }
   },
   methods: {
@@ -76,6 +87,12 @@ export default {
         email: this.loginForm.email,
         password: this.loginForm.password
       })
+      .catch(() => {
+        this.showErrorLogin = true
+      })
+      setTimeout(() => {
+        this.showErrorLogin = false
+      }, 5000)
     },
     signup() {
       this.$store.dispatch('signup', {
@@ -83,6 +100,12 @@ export default {
         password: this.signupForm.password,
         name: this.signupForm.name,
       })
+      .catch(() => {
+        this.showErrorRegister = true
+      })
+      setTimeout(() => {
+        this.showErrorRegister = false
+      }, 5000)
     }
   }
 }

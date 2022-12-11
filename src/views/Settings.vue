@@ -3,16 +3,16 @@
     <div class="col1">
       <h3>Compte</h3>
       <p>Mettre à jour votre profil</p>
-
-      <transition name="fade">
-        <p v-if="showSuccess" class="success">Profil à jour</p>
-      </transition>
-
       <form @submit.prevent>
         <label for="name">Speudo</label>
         <input v-model.trim="name" type="text" :placeholder="userProfile.name" id="name" />
 
         <button @click="updateProfile()" class="button">Mise à jour</button>
+
+        <transition name="fade">
+        <p v-if="showSuccess" class="success">Profil à jour</p>
+        <p v-if="showError" class="error">Nom de profil invalide</p>
+      </transition>
       </form>
     </div>
   </section>
@@ -25,7 +25,8 @@ export default {
   data() {
     return {
       name: '',
-      showSuccess: false
+      showSuccess: false,
+      showError: false
     }
   },
   computed: {
@@ -37,12 +38,18 @@ export default {
         name: this.name !== '' ? this.name : this.userProfile.name
       })
 
-      this.name = ''
+      if(this.name == ''){
+        this.showError = true
+      }
+      else{
+        this.showSuccess = true
+      }
 
-      this.showSuccess = true
+      this.name = ''
 
       setTimeout(() => {
         this.showSuccess = false
+        this.showError = false
       }, 2000)
     }
   }
