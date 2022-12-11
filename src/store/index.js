@@ -97,7 +97,16 @@ const store = new Vuex.Store({
 
             // check if user has liked post
             const doc = await fb.likesCollection.doc(docId).get()
-            if (doc.exists) { return }
+            if (doc.exists) { 
+                fb.postsCollection.doc(likes.id).update({
+                    likes: likes.likesCount - 1
+                })
+                await fb.likesCollection.doc(docId).delete({
+                    postId: likes.id,
+                    userId: userId
+                })
+                return 
+            }
 
             // create post
             await fb.likesCollection.doc(docId).set({

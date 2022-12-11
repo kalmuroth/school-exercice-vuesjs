@@ -8,16 +8,16 @@ Vue.use(VueRouter)
 const routes = [{
         path: '/',
         name: 'Dashboard',
-        component: Dashboard,
-        meta: {
-            requiresAuth: true
-        }
+        component: Dashboard
     },
     {
         path: '/login',
         name: 'Login',
         component: () =>
-            import ( /* webpackChunkName: "login" */ '../views/Login.vue')
+            import ( /* webpackChunkName: "login" */ '../views/Login.vue'),
+        meta: {
+            requiresAuth: false
+        }
     },
     {
         path: '/settings',

@@ -9,10 +9,15 @@
           <li>
             <router-link to="/">Accueil</router-link>
           </li>
-          <li>
+          <li v-if="connected">
             <router-link to="/settings">Option</router-link>
           </li>
-          <li><a @click="logout()">Déconnexion</a></li>
+          <li v-if="connected">
+            <a @click="logout()">Déconnexion</a>
+          </li>
+          <li v-else>
+            <router-link to="/login">Connexion</router-link>
+          </li>
         </ul>
       </div>
     </section>
@@ -20,10 +25,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   methods: {
     logout() {
       this.$store.dispatch('logout')
+    }
+  },
+  computed: {
+    ...mapState(['userProfile']),
+    connected() {
+      return Object.keys(this.userProfile).length > 1
     }
   }
 }

@@ -2,8 +2,8 @@
   <div id="login">
       <section>
         <div class="col1">
-          <h1>MyNetWork</h1>
-          <p>Une application web, un mini site de type réseau social</p>
+          <h1>H3 Hitema</h1>
+          <p>Une application web, un mini site de type réseau social avec Vues.js et Firebase.</p>
         </div>
 
         <div :class="{ 'signup-form': !showLoginForm }" class="col2">

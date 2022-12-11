@@ -4,7 +4,7 @@
       <CommentModal v-if="showCommentModal" :post="selectedPost" @close="toggleCommentModal()"></CommentModal>
     </transition>
     <section>
-      <div class="col1">
+      <div v-if="connected" class="col1">
         <div class="profile">
           <h5>{{ userProfile.name }}</h5>
           <div class="create-post">
@@ -23,9 +23,9 @@
             <span>{{ post.createdOn | formatDate }}</span>
             <p>{{ post.content | trimLength }}</p>
             <ul>
-              <li><a @click="toggleCommentModal(post)">Commentaire {{ post.comments }}</a></li>
-              <li><a @click="likePost(post.id, post.likes)">Likes {{ post.likes }}</a></li>
-              <li><a @click="viewPost(post)">Plus de détail</a></li>
+              <li v-if="connected"><a @click="toggleCommentModal(post)">Commentaire {{ post.comments }}</a></li>
+              <li v-if="connected"><a @click="likePost(post.id, post.likes)">Likes {{ post.likes }}</a></li>
+              <li v-if="connected"><a @click="viewPost(post)">Plus de détail</a></li>
             </ul>
           </div>
         </div>
@@ -85,7 +85,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userProfile', 'posts'])
+    ...mapState(['userProfile', 'posts']),
+    connected() {
+      return Object.keys(this.userProfile).length > 1
+    }
   },
   methods: {
     createPost() {
